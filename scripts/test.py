@@ -1,4 +1,4 @@
-# DES: Import chest XRay datasets
+# DES: test NN example on dummy dataset
 # BY: Tiernan Barry
 
 import pandas as pd
