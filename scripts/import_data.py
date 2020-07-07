@@ -19,7 +19,6 @@ import os
 import glob
 import re
 
-
 #########################################################
 # Set RELATIVE working directory (do not use absolute paths!)
 # Working directory should be '.\scripts' assuming using windows OS
