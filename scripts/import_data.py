@@ -14,14 +14,16 @@
 #import random
 #from PIL import Image
 ##from numpy import asarray
-import cv2
 import os
 import glob
 import re
+import cv2
 
 #########################################################
-# Set RELATIVE working directory (do not use absolute paths!)
-# Working directory should be '.\scripts' assuming using windows OS
+# Set Working Directory:
+# - Ensure RELATIVE working directory (so it can be replicated by any user)
+# - Ensure users can read data using either Windows or UNIX folders
+# - Working directory should be '.\scripts' for windows or './scripts' for UNIX
 #########################################################
 
 current_dir = os.getcwd()
@@ -34,9 +36,17 @@ if current_dir[len(current_dir)-7:len(current_dir)] != 'scripts':
         print("Changing working directory to: ", os.getcwd())
         print("New working directory: ", os.getcwd())
     except:
-        print("Not in correct repo, continuing script anyway")
+        print(r"Can't find .\scripts folder, will try '/scripts' instead (Windows v UNIX) ")
+    try:
+        os.chdir(r"./scripts")
+        print("Changing working directory to: ", os.getcwd())
+        print("New working directory: ", os.getcwd())
+    except:
+        print(r"Still can't find correct directory, continuing script anyway")
 else:
     print("Working directory already correct: ", os.getcwd())
+
+working_dir = os.getcwd()
 
 #########################################################
 # Extract data:
@@ -46,11 +56,18 @@ else:
 # Extract pictures into lists:
 #######################################
 
-# Get list of all files in each directory:
-all_files_train_norm = glob.glob(r".\input_files\train\NORMAL\*g")
-all_files_train_pneu = glob.glob(r".\input_files\train\PNEUMONIA\*g")
-all_files_test_norm = glob.glob(r".\input_files\test\NORMAL\*g")
-all_files_test_pneu = glob.glob(r".\input_files\test\PNEUMONIA\*g")
+if working_dir[len(working_dir)-8:len(working_dir)] == '/scripts':
+    # UNIX: Get list of all files in each directory:
+    all_files_train_norm = glob.glob(r"./input_files/train/NORMAL/*g")
+    all_files_train_pneu = glob.glob(r"./input_files/train/PNEUMONIA/*g")
+    all_files_test_norm = glob.glob(r"./input_files/test/NORMAL/*g")
+    all_files_test_pneu = glob.glob(r"./input_files/test/PNEUMONIA/*g")
+else:
+    # Windows: Get list of all files in each directory:
+    all_files_train_norm = glob.glob(r".\input_files\train\NORMAL\*g")
+    all_files_train_pneu = glob.glob(r".\input_files\train\PNEUMONIA\*g")
+    all_files_test_norm = glob.glob(r".\input_files\test\NORMAL\*g")
+    all_files_test_pneu = glob.glob(r".\input_files\test\PNEUMONIA\*g")
 
 # combine all normal images
 all_normal_imgs = [all_files_train_norm, all_files_test_norm]
