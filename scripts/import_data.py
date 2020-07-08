@@ -1,26 +1,17 @@
 #########################################################
-# DES: Read in pictures from directory
+# DES: Read in pictures from Input Files and export as np arrays.
 # BY: Tiernan Barry
 #########################################################
 
-#import pandas as pd
-#import numpy as np
-#from sklearn import model_selection
-#from sklearn.model_selection import train_test_split
-#from sklearn.neural_network import MLPClassifier
-#from sklearn.linear_model import Perceptron
-#from sklearn.metrics import accuracy_score
-#import matplotlib.pyplot as plt
-#import random
-#from PIL import Image
-##from numpy import asarray
 import os
 import glob
 import re
+import numpy as np
 import cv2
+import pandas as pd
 
 #########################################################
-# Set Working Directory:
+# Set Working Directory:er
 # - Ensure RELATIVE working directory (so it can be replicated by any user)
 # - Ensure users can read data using either Windows or UNIX folders
 # - Working directory should be '.\scripts' for windows or './scripts' for UNIX
@@ -87,10 +78,21 @@ all_penu_img_list = get_all_images(all_penu_imgs)
 print("Number of NORMAL images: ", len(set(all_normal_img_list)))
 print("Number of PNEUMONIA images: ", len(set(all_penu_img_list)))
 
+#######################################
+# Filter for just VIRAL PNEUMONIA:
+# - Balances dataset
+# - Makes problem 2 way classification, not 3
+#######################################
+
 # filter pneumonia files for JUST viral??
 viral_pattern = re.compile('virus')
 virus_list = [i for i in all_penu_img_list if viral_pattern.search(i) ]
 print("Number of PNEUMONIA/VIRUS images: ", len(set(virus_list)))
+
+#########################################################
+# Transform data:
+# - Convert images to np arrays
+#########################################################
 
 # List comprehension to get all files into list variables:
 def parse_images(image_list):
@@ -107,10 +109,6 @@ pneu_vir_pics = parse_images(virus_list)
 # Test data:
 print(normal_pics[0])
 print(pneu_vir_pics[0])
-
-
-
-
 
 
 
