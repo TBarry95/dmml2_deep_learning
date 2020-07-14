@@ -3,15 +3,15 @@
 # BY: Tiernan Barry
 #########################################################
 
-#import pandas as pd
-#import numpy as np
+import pandas as pd
+import numpy as np
 #from sklearn import model_selection
 #from sklearn.model_selection import train_test_split
 #from sklearn.neural_network import MLPClassifier
 #from sklearn.linear_model import Perceptron
 #from sklearn.metrics import accuracy_score
 #import matplotlib.pyplot as plt
-#import random
+import random
 #from PIL import Image
 ##from numpy import asarray
 import cv2
@@ -25,7 +25,6 @@ import re
 #########################################################
 
 current_dir = os.getcwd()
-
 print("Current directory: ", current_dir)
 
 if current_dir[len(current_dir)-7:len(current_dir)] != 'scripts':
@@ -56,7 +55,7 @@ all_files_test_pneu = glob.glob(r".\input_files\test\PNEUMONIA\*g")
 all_normal_imgs = [all_files_train_norm, all_files_test_norm]
 all_penu_imgs = [all_files_train_pneu, all_files_test_pneu]
 
-# combine into 1 list:
+# combine into 2 lists: Normal and Pneumonia
 def get_all_images(all_imgs):
     new_list = []
     for i in all_imgs:
@@ -91,10 +90,7 @@ pneu_vir_pics = parse_images(virus_list)
 print(normal_pics[0])
 print(pneu_vir_pics[0])
 
-
-
-
-
-
-
-
+img = normal_pics[0]
+plt.imshow(img, cmap = 'gray', interpolation = 'bicubic')
+plt.xticks([]), plt.yticks([])  # to hide tick values on X and Y axis
+plt.show()
