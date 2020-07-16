@@ -1,5 +1,5 @@
 #########################################################
-# DES: Read in pictures from Input Files and export as np arrays.
+# DES: Read in pictures from Input Files
 # BY: Tiernan Barry
 #########################################################
 
