@@ -43,6 +43,11 @@ else:
 working_dir = os.getcwd()
 
 #########################################################
+# Import data and add to new folder:
+#########################################################
+
+
+#########################################################
 # Extract data:
 #########################################################
 
@@ -118,7 +123,7 @@ for i in viral_test:
 
 # Get validate:
 validate_normal = all_normal_img_list[int((len(all_normal_img_list)*0.9)):len(all_normal_img_list)]
-validate_viral = virus_list[int((len(virus_list)*0.9)):len(virus_list)]
+validate_viral = virus_list[int((len(virus_list) * 0.9)):len(virus_list)]
 
 for i in validate_normal:
     shutil.copy(i, r'.\cleaned_data\validate\normal')
@@ -148,3 +153,4 @@ def parse_images(image_list):
 # Test data:
 # print(normal_pics[0])
 # print(pneu_vir_pics[0])
+
