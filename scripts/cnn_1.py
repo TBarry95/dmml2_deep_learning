@@ -6,16 +6,19 @@
 # Libraries:
 ############################################################
 
-# from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten, Conv2D, MaxPooling2D
+from tensorflow.keras.layers import Dense, Dropout, Activation, Flatten, Conv2D, MaxPooling2D
 
-import tensorflow as tf
+import os
+import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+
+import tensorflow as tf
 from keras.preprocessing.image import ImageDataGenerator
+from keras.models import Sequential
+
 from tensorflow.keras.optimizers import RMSprop
 from keras.preprocessing import image
-import os
-from sklearn.model_selection import train_test_split
 from PIL import Image
 from IPython.display import display
 
@@ -55,24 +58,35 @@ working_dir = os.getcwd()
 
 model = tf.keras.models.Sequential([
 
-    # Note the input shape is the desired size of the image 300x300 with 3 bytes color
-    # This is the first convolution
-    tf.keras.layers.Conv2D(16, (3, 3), activation='relu', input_shape=(300, 300, 3)),
+    # when adding conv layer to model - need to specify which filters model needs to have
+    # specify the dimension of the filter - scnas across the image (called convolving)
+    # max pooling: reduces the dimesnionality of images by reducing pixels from output of previous layer
+    #              Pooling layers are used to reduce the dimensions of the feature maps.
+    #              Thus, it reduces the number of parameters to learn and the amount of computation performed in the network.
+
+    # use Conv2D = for images
+
+    # 1st convolution layer:
+    tf.keras.layers.Conv2D(16, filter = (3, 3), activation='relu', input_shape=(300, 300, 3)), # The input shape is the desired size of the image 300x300 with 3 bytes color
     tf.keras.layers.MaxPooling2D(2, 2),
 
-    # The second convolution
-    tf.keras.layers.Conv2D(32, (3, 3), activation='relu'),
+    # 2nd convolution layer:
+    tf.keras.layers.Conv2D(32, filter = (3, 3), activation='relu'),
     tf.keras.layers.MaxPooling2D(2, 2),
 
-    # The third convolution
+    # 3rd convolution layer:
+    tf.keras.layers.Conv2D(64, filter = (3, 3), activation='relu'),
+    tf.keras.layers.MaxPooling2D(2, 2),
+
+    # 4th convolution layer:
     tf.keras.layers.Conv2D(64, (3, 3), activation='relu'),
     tf.keras.layers.MaxPooling2D(2, 2),
 
-    # The fourth convolution
+    # 5th convolution layer:
     tf.keras.layers.Conv2D(64, (3, 3), activation='relu'),
     tf.keras.layers.MaxPooling2D(2, 2),
 
-    # The fifth convolution
+    # 6th convolution layer:
     tf.keras.layers.Conv2D(64, (3, 3), activation='relu'),
     tf.keras.layers.MaxPooling2D(2, 2),
 
@@ -93,6 +107,7 @@ model.compile(loss='binary_crossentropy', optimizer=RMSprop(lr=0.001), metrics =
 train_datagen = ImageDataGenerator(rescale = 1/255)
 test_datagen = ImageDataGenerator(rescale = 1/255)
 
+# get training images
 train_gen = train_datagen.flow_from_directory(
     r'.\cleaned_data\train',
     target_size = (300,300),
@@ -100,6 +115,7 @@ train_gen = train_datagen.flow_from_directory(
     class_mode = 'binary'
 )
 
+# get testing images
 test_gen = train_datagen.flow_from_directory(
     r'.\cleaned_data\test',
     target_size = (300,300),
@@ -107,7 +123,7 @@ test_gen = train_datagen.flow_from_directory(
     class_mode = 'binary'
 )
 
-# training the model
+# train model
 history = model.fit(
     train_gen,
     steps_per_epoch = 10,
@@ -119,7 +135,19 @@ history = model.fit(
 # Model Evaluation:
 ############################################################
 
+# load new unseen dataset
+validation_datagen = ImageDataGenerator(rescale = 1/255)
 
+val_generator = validation_datagen.flow_from_directory(
+    r'.\cleaned_data\validate',
+    target_size = (300, 300),
+    batch_size = 128,
+    class_mode = 'binary'
+)
+
+eval_result = model.evaluate_generator(val_generator, 624)
+print('loss rate at evaluation data :', eval_result[0])
+print('accuracy rate at evaluation data :', eval_result[1])
 
 ############################################################
 # Final Model Prediction:
