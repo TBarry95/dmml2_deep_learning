@@ -1,14 +1,15 @@
 #########################################################
-# DES: Read in pictures from Input Files
+# DES: Read in pictures from Input Files, and perform the following actions:
+#      - Filter image dataset into 2 categories: 'normal' and 'viral'
+#      - Export to '.\cleaned_data' location
 # BY: Tiernan Barry
 #########################################################
 
 import os
 import glob
 import re
-import numpy as np
+import shutil
 import cv2
-import pandas as pd
 
 #########################################################
 # Set Working Directory:
@@ -27,12 +28,13 @@ if current_dir[len(current_dir)-7:len(current_dir)] != 'scripts':
         print("New working directory: ", os.getcwd())
     except:
         print(r"Can't find .\scripts folder, will try '/scripts' instead (Windows v UNIX) ")
-    try:
-        os.chdir(r"./scripts")
-        print("Changing working directory to: ", os.getcwd())
-        print("New working directory: ", os.getcwd())
-    except:
-        print(r"Still can't find correct directory, continuing script anyway")
+
+        try:
+            os.chdir(r"./scripts")
+            print("Changing working directory to: ", os.getcwd())
+            print("New working directory: ", os.getcwd())
+        except:
+            print(r"Still can't find correct directory, continuing script anyway")
 else:
     print("Working directory already correct: ", os.getcwd())
 
@@ -88,6 +90,22 @@ viral_pattern = re.compile('virus')
 virus_list = [i for i in all_penu_img_list if viral_pattern.search(i) ]
 print("Number of PNEUMONIA/VIRUS images: ", len(set(virus_list)))
 
+#######################################
+# Export new folder: NORMAL and VIRAL
+#######################################
+
+normal_images = all_normal_img_list
+viral_images = virus_list
+
+for i in normal_images:
+    shutil.copy(i, r'.\cleaned_data\normal')
+
+for i in viral_images:
+    shutil.copy(i, r'.\cleaned_data\viral')
+
+print("Filtered raw dataset to new folder: \cleaned_data ")
+
+
 #########################################################
 # Transform data:
 # - Convert images to np arrays
@@ -108,4 +126,3 @@ pneu_vir_pics = parse_images(virus_list)
 # Test data:
 print(normal_pics[0])
 print(pneu_vir_pics[0])
-
