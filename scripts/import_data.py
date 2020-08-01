@@ -11,6 +11,7 @@ import glob
 import re
 import shutil
 import cv2
+from sklearn.model_selection import train_test_split
 
 #########################################################
 # Set Working Directory:
@@ -98,11 +99,20 @@ print("Number of PNEUMONIA/VIRUS images: ", len(set(virus_list)))
 normal_images = all_normal_img_list
 viral_images = virus_list
 
-for i in normal_images:
-    shutil.copy(i, r'.\cleaned_data\normal')
+normal_train, normal_test= train_test_split(normal_images, test_size=0.2, random_state=0)
+viral_train, viral_test= train_test_split(viral_images, test_size=0.2, random_state=0)
 
-for i in viral_images:
-    shutil.copy(i, r'.\cleaned_data\viral')
+for i in normal_train:
+    shutil.copy(i, r'.\cleaned_data\train\normal')
+
+for i in normal_test:
+    shutil.copy(i, r'.\cleaned_data\test\normal')
+
+for i in viral_train:
+    shutil.copy(i, r'.\cleaned_data\train\viral')
+
+for i in viral_test:
+    shutil.copy(i, r'.\cleaned_data\test\viral')
 
 print("Filtered raw dataset to new folder: \cleaned_data ")
 
