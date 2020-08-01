@@ -1,7 +1,8 @@
 #########################################################
-# DES: Read in pictures from Input Files, and perform the following actions:
-#      - Filter image dataset into 2 categories: 'normal' and 'viral'
-#      - Export to '.\cleaned_data' location
+# DES: Import raw dataset from '.\scripts\input_files' and export target dataset into 'cleaned_data' folder.
+#      Removing all bacterial pneumonia images for the following reasons:
+#      - Balance the dataset 50:50 between pneumonia / normal
+#      - COVID is viral
 # BY: Tiernan Barry
 #########################################################
 
@@ -105,7 +106,6 @@ for i in viral_images:
 
 print("Filtered raw dataset to new folder: \cleaned_data ")
 
-
 #########################################################
 # Transform data:
 # - Convert images to np arrays
@@ -120,9 +120,9 @@ def parse_images(image_list):
         pics.append(img)
     return pics
 
-normal_pics = parse_images(all_normal_img_list)
-pneu_vir_pics = parse_images(virus_list)
+# normal_pics = parse_images(all_normal_img_list)
+# pneu_vir_pics = parse_images(virus_list)
 
 # Test data:
-print(normal_pics[0])
-print(pneu_vir_pics[0])
+# print(normal_pics[0])
+# print(pneu_vir_pics[0])
