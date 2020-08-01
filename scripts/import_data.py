@@ -93,14 +93,16 @@ virus_list = [i for i in all_penu_img_list if viral_pattern.search(i) ]
 print("Number of PNEUMONIA/VIRUS images: ", len(set(virus_list)))
 
 #######################################
-# Export new folder: NORMAL and VIRAL
+# Export new folder: Cleaned data:
+# Test, Train, Validate: Each with Normal and Viral datasets loaded.
 #######################################
 
-normal_images = all_normal_img_list
-viral_images = virus_list
+# Get test and train folders:
+test_train_normal = all_normal_img_list[0:int((len(all_normal_img_list)*0.9))]
+test_train_viral = virus_list[0:int((len(virus_list)*0.9))]
 
-normal_train, normal_test= train_test_split(normal_images, test_size=0.2, random_state=0)
-viral_train, viral_test= train_test_split(viral_images, test_size=0.2, random_state=0)
+normal_train, normal_test= train_test_split(test_train_normal, test_size=0.2, random_state=0)
+viral_train, viral_test= train_test_split(test_train_viral, test_size=0.2, random_state=0)
 
 for i in normal_train:
     shutil.copy(i, r'.\cleaned_data\train\normal')
@@ -113,6 +115,16 @@ for i in viral_train:
 
 for i in viral_test:
     shutil.copy(i, r'.\cleaned_data\test\viral')
+
+# Get validate:
+validate_normal = all_normal_img_list[int((len(all_normal_img_list)*0.9)):len(all_normal_img_list)]
+validate_viral = virus_list[int((len(virus_list)*0.9)):len(virus_list)]
+
+for i in validate_normal:
+    shutil.copy(i, r'.\cleaned_data\validate\normal')
+
+for i in validate_viral:
+    shutil.copy(i, r'.\cleaned_data\validate\viral')
 
 print("Filtered raw dataset to new folder: \cleaned_data ")
 
