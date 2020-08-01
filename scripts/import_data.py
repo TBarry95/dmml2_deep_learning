@@ -11,7 +11,7 @@ import cv2
 import pandas as pd
 
 #########################################################
-# Set Working Directory:er
+# Set Working Directory:
 # - Ensure RELATIVE working directory (so it can be replicated by any user)
 # - Ensure users can read data using either Windows or UNIX folders
 # - Working directory should be '.\scripts' for windows or './scripts' for UNIX
