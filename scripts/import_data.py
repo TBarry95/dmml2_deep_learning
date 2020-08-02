@@ -11,8 +11,9 @@ import glob
 import re
 import shutil
 import cv2
-import scripts.set_working_dir as set_wd
 from sklearn.model_selection import train_test_split
+import scripts.set_working_dir as set_wd
+
 
 #########################################################
 # Set Working Directory:
