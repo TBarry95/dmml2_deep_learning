@@ -11,6 +11,7 @@ import glob
 import re
 import shutil
 import cv2
+import scripts.set_working_dir as set_wd
 from sklearn.model_selection import train_test_split
 
 #########################################################
@@ -20,27 +21,7 @@ from sklearn.model_selection import train_test_split
 # - Working directory should be '.\scripts' for windows or './scripts' for UNIX
 #########################################################
 
-current_dir = os.getcwd()
-print("Current directory: ", current_dir)
-
-if current_dir[len(current_dir)-7:len(current_dir)] != 'scripts':
-    try:
-        os.chdir(r".\scripts")
-        print("Changing working directory to: ", os.getcwd())
-        print("New working directory: ", os.getcwd())
-    except:
-        print(r"Can't find .\scripts folder, will try '/scripts' instead (Windows v UNIX) ")
-
-        try:
-            os.chdir(r"./scripts")
-            print("Changing working directory to: ", os.getcwd())
-            print("New working directory: ", os.getcwd())
-        except:
-            print(r"Still can't find correct directory, continuing script anyway")
-else:
-    print("Working directory already correct: ", os.getcwd())
-
-working_dir = os.getcwd()
+working_dir = set_wd.set_correct_working_dir()
 
 #########################################################
 # Import data and add to new folder:

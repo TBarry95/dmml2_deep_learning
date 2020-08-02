@@ -12,11 +12,11 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
+import scripts.set_working_dir as set_wd
 
 import tensorflow as tf
 from keras.preprocessing.image import ImageDataGenerator
 from keras.models import Sequential
-
 from tensorflow.keras.optimizers import RMSprop
 from keras.preprocessing import image
 from PIL import Image
@@ -29,27 +29,7 @@ from IPython.display import display
 # - Working directory should be '.\scripts' for windows or './scripts' for UNIX
 #########################################################
 
-current_dir = os.getcwd()
-print("Current directory: ", current_dir)
-
-if current_dir[len(current_dir)-7:len(current_dir)] != 'scripts':
-    try:
-        os.chdir(r".\scripts")
-        print("Changing working directory to: ", os.getcwd())
-        print("New working directory: ", os.getcwd())
-    except:
-        print(r"Can't find .\scripts folder, will try '/scripts' instead (Windows v UNIX) ")
-
-        try:
-            os.chdir(r"./scripts")
-            print("Changing working directory to: ", os.getcwd())
-            print("New working directory: ", os.getcwd())
-        except:
-            print(r"Still can't find correct directory, continuing script anyway")
-else:
-    print("Working directory already correct: ", os.getcwd())
-
-working_dir = os.getcwd()
+working_dir = set_wd.set_correct_working_dir()
 
 ############################################################
 # Build and train model:
