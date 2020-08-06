@@ -15,6 +15,7 @@ import scripts.set_working_dir as set_wd
 import tensorflow as tf
 from keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.optimizers import RMSprop
+import math
 
 #########################################################
 # Set Working Directory:
@@ -51,35 +52,18 @@ def cnn_5_layers(loss, optimizer, activation = 'relu'):
     # Available loss metrics:
     ##################################
     # Probabilistic losses
-    # - BinaryCrossentropy class
-    # - CategoricalCrossentropy class
-    # - SparseCategoricalCrossentropy class
-    # - Poisson class
-    # - binary_crossentropy function
-    # - categorical_crossentropy function
-    # - sparse_categorical_crossentropy function
+    # - binary_crossentropy
+    # - sparse_categorical_crossentropy
     # - poisson function
-    # - KLDivergence class
     # - kl_divergence function
     # Regression losses
-    # - MeanSquaredError class
-    # - MeanAbsoluteError class
-    # - MeanAbsolutePercentageError class
-    # - MeanSquaredLogarithmicError class
-    # - CosineSimilarity class
     # - mean_squared_error function
     # - mean_absolute_error function
     # - mean_absolute_percentage_error function
     # - mean_squared_logarithmic_error function
     # - cosine_similarity function
-    # - Huber class
     # - huber function
-    # - LogCosh class
     # - log_cosh function
-    # Hinge losses for "maximum-margin" classification
-    # - Hinge class
-    # - SquaredHinge class
-    # - CategoricalHinge class
     # - hinge function
     # - squared_hinge function
     # - categorical_hinge function
@@ -176,6 +160,17 @@ def cnn_5_layers(loss, optimizer, activation = 'relu'):
     # Extract dataset from folder:
     train_datagen = ImageDataGenerator(rescale = 1/255)
     test_datagen = ImageDataGenerator(rescale = 1/255)
+
+    # calculate steps per epoch:
+    batch_size = 128
+    trainingsize = 2213
+    validate_size = 309
+
+    def calculate_spe(trainingsize, batch_size):
+        return int(math.ceil((1. * trainingsize) / batch_size))
+
+    steps_per_epoch = calculate_spe(trainingsize, batch_size)
+    validation_steps = calculate_spe(validate_size, batch_size)
 
     # get training images
     train_gen = train_datagen.flow_from_directory(

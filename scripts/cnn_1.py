@@ -171,6 +171,7 @@ def cnn_5_layers(loss, optimizer, activation = 'relu'):
 
 # model 1:
 opt = RMSprop(lr=0.001)
+
 model_1 = cnn_5_layers(loss = 'categorical_crossentropy',
                        optimizer = opt,
                        activation='relu')
