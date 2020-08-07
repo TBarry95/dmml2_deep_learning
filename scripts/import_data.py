@@ -133,6 +133,6 @@ def parse_images(image_list):
 # pneu_vir_pics = parse_images(virus_list)
 
 # Test data:
-# print(normal_pics[0])
-# print(pneu_vir_pics[0])
+ print(normal_pics[0])
+ print(pneu_vir_pics[0])
 

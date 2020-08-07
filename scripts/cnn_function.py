@@ -143,7 +143,7 @@ def cnn_5_layers(loss, optimizer, activation = 'relu'):
         tf.keras.layers.Dense(512, activation = 'relu'),  # 512 neuron hidden layer
 
         # Only 1 output neuron = 'normal' and 1 'pneumonia'
-        tf.keras.layers.Dense(1, activation='sigmoid')
+        tf.keras.layers.Dense(1, activation='sigmoid') 
     ])
 
     model_summary = cnn_model.summary()
