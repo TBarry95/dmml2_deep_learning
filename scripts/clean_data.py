@@ -1,5 +1,5 @@
 #########################################################
-# DES: Import raw dataset from '.\scripts\input_files' and export target dataset into 'cleaned_data' folder.
+# DES: Import raw dataset from '.\scripts\input_files' and export cleaned target dataset into 'cleaned_data' folder.
 #      Removing all bacterial pneumonia images for the following reasons:
 #      - Balance the dataset 50:50 between pneumonia / normal
 #      - COVID is viral
@@ -14,7 +14,6 @@ import cv2
 from sklearn.model_selection import train_test_split
 import scripts.set_working_dir as set_wd
 
-
 #########################################################
 # Set Working Directory:
 # - Ensure RELATIVE working directory (so it can be replicated by any user)
@@ -26,11 +25,6 @@ working_dir = set_wd.set_correct_working_dir()
 
 #########################################################
 # Import data and add to new folder:
-#########################################################
-
-
-#########################################################
-# Extract data:
 #########################################################
 
 #######################################
@@ -114,25 +108,3 @@ for i in validate_viral:
     shutil.copy(i, r'.\cleaned_data\validate\viral')
 
 print("Filtered raw dataset to new folder: \cleaned_data ")
-
-#########################################################
-# Transform data:
-# - Convert images to np arrays
-#########################################################
-
-# List comprehension to get all files into list variables:
-def parse_images(image_list):
-    pics = []
-    print("Parsing images into numpy matrices, this takes a few minutes")
-    for pic in image_list:
-        img = cv2.imread(pic)
-        pics.append(img)
-    return pics
-
-# normal_pics = parse_images(all_normal_img_list)
-# pneu_vir_pics = parse_images(virus_list)
-
-# Test data:
- print(normal_pics[0])
- print(pneu_vir_pics[0])
-
