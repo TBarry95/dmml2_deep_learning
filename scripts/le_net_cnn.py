@@ -24,7 +24,7 @@ import math
 working_dir = set_wd.set_correct_working_dir()
 
 ############################################################
-#
+# define LeNet model:
 ############################################################
 
 lenet_cnn_model = tf.keras.models.Sequential([

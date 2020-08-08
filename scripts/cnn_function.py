@@ -11,7 +11,6 @@
 
 import os
 import scripts.set_working_dir as set_wd
-
 import tensorflow as tf
 from keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.optimizers import RMSprop
@@ -118,26 +117,6 @@ def cnn_5_layers(loss, optimizer, activation = 'relu'):
         tf.keras.layers.Conv2D(64, (3, 3), activation = activation),
         tf.keras.layers.MaxPooling2D(2, 2),
 
-        # 6th layer:
-        #tf.keras.layers.Conv2D(64, (3, 3), activation = activation),
-        #tf.keras.layers.MaxPooling2D(2, 2),
-
-        # 7th layer:
-        #tf.keras.layers.Conv2D(64, (3, 3), activation = activation),
-        #tf.keras.layers.MaxPooling2D(2, 2),
-
-        # 8th layer:
-        #tf.keras.layers.Conv2D(64, (3, 3), activation = activation),
-        #tf.keras.layers.MaxPooling2D(2, 2),
-
-        # 9th layer:
-        #tf.keras.layers.Conv2D(64, (3, 3), activation = activation),
-        #tf.keras.layers.MaxPooling2D(2, 2),
-
-        # 10th layer:
-        #tf.keras.layers.Conv2D(64, (3, 3), activation = activation),
-        #tf.keras.layers.MaxPooling2D(2, 2),
-
         tf.keras.layers.Flatten(),
 
         tf.keras.layers.Dense(512, activation = 'relu'),  # 512 neuron hidden layer
@@ -161,22 +140,15 @@ def cnn_5_layers(loss, optimizer, activation = 'relu'):
     train_datagen = ImageDataGenerator(rescale = 1/255)
     test_datagen = ImageDataGenerator(rescale = 1/255)
 
-    # calculate steps per epoch:
     batch_size = 128
-    trainingsize = 2213
-    validate_size = 309
-
-    def calculate_spe(trainingsize, batch_size):
-        return int(math.ceil((1. * trainingsize) / batch_size))
-
-    steps_per_epoch = calculate_spe(trainingsize, batch_size)
-    validation_steps = calculate_spe(validate_size, batch_size)
+    training_size = 2213
+    epochs = 5
 
     # get training images
     train_gen = train_datagen.flow_from_directory(
         r'.\cleaned_data\train',
         target_size=(300, 300),
-        batch_size=128,
+        batch_size=batch_size,
         class_mode='binary'
     )
 
@@ -184,15 +156,15 @@ def cnn_5_layers(loss, optimizer, activation = 'relu'):
     test_gen = test_datagen.flow_from_directory(
         r'.\cleaned_data\test',
         target_size=(300, 300),
-        batch_size=128,
+        batch_size=batch_size,
         class_mode='binary'
     )
 
     # train model
     history = cnn_model.fit(
         train_gen,
-        steps_per_epoch=10,
-        epochs=5,
+        steps_per_epoch=int(training_size/batch_size),
+        epochs=epochs,
         validation_data=test_gen
     )
 
@@ -206,7 +178,7 @@ def cnn_5_layers(loss, optimizer, activation = 'relu'):
     val_generator = validation_datagen.flow_from_directory(
         r'.\cleaned_data\validate',
         target_size=(300, 300),
-        batch_size=128,
+        batch_size=batch_size,
         class_mode='binary'
     )
 
