@@ -21,7 +21,7 @@ working_dir = set_wd.set_correct_working_dir()
 # import_data.py: Run first job
 #########################################################
 
-import scripts.import_data
+import scripts.clean_data
 
 #########################################################
 # cnn_comparison.py:
