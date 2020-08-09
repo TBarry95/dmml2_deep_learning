@@ -11,6 +11,7 @@ import tensorflow as tf
 from keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.optimizers import RMSprop
 import math
+import numpy as np
 
 try:
     import scripts.set_working_dir as set_wd
@@ -74,7 +75,10 @@ models = [[leNet_bc_1, "LeNet_binary_crossentropy0.1"], [leNet_bc_2, "LeNet_bina
 # Validate Models: get final results
 ############################################################
 
-results = []
+models_test = [models[0]]
+
+accuracy_results = []
+all_predictions = []
 
 for i in models:
 
@@ -90,11 +94,21 @@ for i in models:
         class_mode = 'binary'
     )
 
-    eval_result = i[0].evaluate_generator(val_generator, 624)
+    # accuracy summary
+    eval_result = i[0].evaluate_generator(val_generator)
     print('Loss rate for validation: ', eval_result[0])
     print('Accuracy rate for validation: ', eval_result[1])
 
-    # save results:
-    results.append([i[1], eval_result[1]])
+    # get predictions:
+    predictions = i[0].predict(val_generator, verbose=1)
 
-print(results)
+    predictions_array = np.array(predictions)
+    print(predictions_array.shape)
+    predicted_classes = np.argmax(predictions_array, axis=1)
+
+    # save results:
+    accuracy_results.append([i[1], eval_result[1]])
+    all_predictions.append([i[1], predicted_classes])
+
+# print(accuracy_results)
+# print(all_predictions)

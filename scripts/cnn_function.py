@@ -43,41 +43,11 @@ def cnn_5_layers(loss, optimizer, activation = 'relu'):
                       Exhaustive list is provided below from Keras documentation: https://keras.io/api/optimizers/
                       Can either be applied by string with default param applied, or by instantiating custom.
 
-    :param activation:
+    :param activation: Choose which activation method used for NN model.
+                      Exhaustive list is provided below from Keras documentation: https://keras.io/api/layers/activations/
 
-    :return: The NN model
+    :return: The trained NN model
     """
-    ##################################
-    # Available loss metrics:
-    ##################################
-    # Probabilistic losses
-    # - binary_crossentropy
-    # - sparse_categorical_crossentropy
-    # - poisson function
-    # - kl_divergence function
-    # Regression losses
-    # - mean_squared_error function
-    # - mean_absolute_error function
-    # - mean_absolute_percentage_error function
-    # - mean_squared_logarithmic_error function
-    # - cosine_similarity function
-    # - huber function
-    # - log_cosh function
-    # - hinge function
-    # - squared_hinge function
-    # - categorical_hinge function
-
-    ##################################
-    # Available optimizers:
-    ##################################
-    # - SGD
-    # - RMSprop
-    # - Adam
-    # - Adadelta
-    # - Adagrad
-    # - Adamax
-    # - Nadam
-    # - Ftrl
 
     ##################################
     # Define model:
@@ -182,7 +152,7 @@ def cnn_5_layers(loss, optimizer, activation = 'relu'):
         class_mode='binary'
     )
 
-    eval_result = cnn_model.evaluate_generator(val_generator, 624)
+    eval_result = cnn_model.evaluate_generator(val_generator)
     print('loss rate at evaluation data :', eval_result[0])
     print('accuracy rate at evaluation data :', eval_result[1])
 

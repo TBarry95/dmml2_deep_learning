@@ -14,7 +14,6 @@ from keras.preprocessing import image
 from PIL import Image
 from IPython.display import display
 
-
 #########################################################
 # Set Working Directory:
 # - Ensure RELATIVE working directory (so it can be replicated by any user)
