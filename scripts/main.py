@@ -40,7 +40,8 @@ except:
 # Modelling: Run various CNN models and print results
 # - LeNet CNN
 # - AlexNet CNN
-# -
+# - VGGNet16
+# - GoogleNet
 #########################################################
 
 print("#########################################################")
@@ -65,5 +66,6 @@ except:
 # AlexNet CNN:
 #
 #########################################
+
 
 
