@@ -57,9 +57,10 @@ cnn_model2 = cnn_fns.cnn_5_layers(loss = "categorical_crossentropy",
                                   )
 
 #########################################################
-# Run CNN model 3:
-# loss = x
-# optimiser = RMSprop(lr=0.001)
-# activation fn = relu
+# Run CNN model 3: LeNet model:
+# Import trained LeNet model and run validation:
 #########################################################
+
+
+
 

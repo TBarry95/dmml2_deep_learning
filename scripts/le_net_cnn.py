@@ -1,5 +1,5 @@
 ############################################################
-# DES: Deine LeNet CNN
+# DES: Define LeNet CNN
 ############################################################
 
 ############################################################
@@ -101,6 +101,8 @@ history = lenet_cnn_model.fit(
     epochs = epochs,
     validation_data = test_gen
 )
+
+lenet_cnn_model.save(r'model_1')
 
 ############################################################
 # Validate Model: get final results
