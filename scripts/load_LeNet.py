@@ -7,11 +7,15 @@
 ############################################################
 
 import os
-import scripts.set_working_dir as set_wd
 import tensorflow as tf
 from keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.optimizers import RMSprop
 import math
+
+try:
+    import scripts.set_working_dir as set_wd
+except:
+    import set_working_dir as set_wd
 
 #########################################################
 # Set Working Directory:
@@ -62,9 +66,9 @@ models = [[leNet_bc_1, "LeNet_binary_crossentropy0.1"], [leNet_bc_2, "LeNet_bina
           [leNet_msle_3, "LeNet_mean_squared_logarithmic_error0.001"]]
 
 # Print summaries:
-for i in models:
-    print(i[1])
-    print(i[0].summary())
+# for i in models:
+#     print(i[1])
+#     print(i[0].summary())
 
 ############################################################
 # Validate Models: get final results
@@ -93,4 +97,4 @@ for i in models:
     # save results:
     results.append([i[1], eval_result[1]])
 
-
+print(results)
