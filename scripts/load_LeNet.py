@@ -28,7 +28,7 @@ except:
 working_dir = set_wd.set_correct_working_dir()
 
 ############################################################
-# Get trained models:
+# Get trained LeNet models:
 ############################################################
 
 # loss function: 'binary_crossentropy'
@@ -75,7 +75,7 @@ models = [[leNet_bc_1, "LeNet_binary_crossentropy0.1"], [leNet_bc_2, "LeNet_bina
 # Validate Models: get final results
 ############################################################
 
-models_test = [models[0]]
+#models_test = [models[0]]
 
 accuracy_results = []
 all_predictions = []

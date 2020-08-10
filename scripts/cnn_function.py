@@ -98,21 +98,28 @@ def cnn_5_layers(loss, optimizer, activation = 'relu'):
     model_summary = cnn_model.summary()
     print(model_summary)
 
+    sgd = tf.keras.optimizers.SGD(learning_rate = optimizer, momentum=0.0, nesterov=False, name='SGD')
+
     cnn_model.compile(loss = loss,
-                      optimizer = optimizer,
+                      optimizer = sgd,
                       metrics = ['accuracy'])
 
     ############################################################
     # Train and Test Model:
     ############################################################
 
-    # Extract dataset from folder:
-    train_datagen = ImageDataGenerator(rescale = 1/255)
-    test_datagen = ImageDataGenerator(rescale = 1/255)
-
     batch_size = 128
     training_size = 2213
+    testing_size = 2801 - training_size
     epochs = 5
+
+    fn_steps_per_epoch = lambda x: int(math.ceil(1. * x / batch_size))
+    steps_per_epoch = fn_steps_per_epoch(training_size)
+    test_steps = fn_steps_per_epoch(testing_size)
+
+    # Extract dataset from folder:
+    train_datagen = ImageDataGenerator(rescale=1 / 255)
+    test_datagen = ImageDataGenerator(rescale=1 / 255)
 
     # get training images
     train_gen = train_datagen.flow_from_directory(
@@ -133,28 +140,14 @@ def cnn_5_layers(loss, optimizer, activation = 'relu'):
     # train model
     history = cnn_model.fit(
         train_gen,
-        steps_per_epoch=int(training_size/batch_size),
-        epochs=epochs,
-        validation_data=test_gen
+        steps_per_epoch = steps_per_epoch,
+        epochs = epochs,
+        validation_data = test_gen,
+        validation_steps = test_steps
     )
 
-    ############################################################
-    # Validate Model: get final results
-    ############################################################
+    model_name_loc = r".\saved_models\cnn_5layer_" + str(loss) + str(optimizer)
+    cnn_model.save(model_name_loc)
 
-    # load new unseen dataset
-    validation_datagen = ImageDataGenerator(rescale = 1 / 255)
-
-    val_generator = validation_datagen.flow_from_directory(
-        r'.\cleaned_data\validate',
-        target_size=(300, 300),
-        batch_size=batch_size,
-        class_mode='binary'
-    )
-
-    eval_result = cnn_model.evaluate_generator(val_generator)
-    print('loss rate at evaluation data :', eval_result[0])
-    print('accuracy rate at evaluation data :', eval_result[1])
-
-    return eval_result
+    return r".\saved_models\cnn_5layer_" + str(loss) + str(optimizer)
 

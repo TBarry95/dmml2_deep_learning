@@ -1,6 +1,16 @@
 #########################################################
-# DES: Main file for automating execution of project.
+# DES: Main file for automating execution of project. #
 #      Runs the following jobs:
+#      - Clean data (clean_data.py)
+#      - Modelling:
+#         - LeNet CNN
+#         - AlexNet CNN
+#         - VGGNet16 CNN
+#         - GoogleNet CNN
+#         - Alternative CNNs:
+#           - 5 layers
+#      -
+#      **Exception handling designed to run either from console or from correct working directory.
 #########################################################
 
 import sys
