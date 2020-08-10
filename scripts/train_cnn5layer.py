@@ -31,10 +31,12 @@ working_dir = set_wd.set_correct_working_dir()
 import scripts.cnn_function as cnn_fns
 
 ############################################################
-# Define model:
-# - Parameters to change:
+# Train models:
+# - 2 models defined in cnn_function: 1 has SGD optimisation, other has RMSProp
+# - Run 2 models with different combinations of parameters:
 # - - Optimisation
 # - - Loss function
+# Number of models = 2 * 3 * 3
 ############################################################
 
 #########################################
@@ -51,16 +53,24 @@ opts = [0.1,  0.01, 0.001]
 combos = list(product(loss_fns, opts))
 
 #########################################
-# Define X models (X = len(loss_fns)*len(opts)
+# Define X models (X = len(loss_fns)*len(opts)*2)
 #########################################
 
+# Train Gradient Descent Algos:
 model_paths = []
 
 # CNN is defined in cnn_function.py
 for i in combos:
-    model_path = cnn_fns.cnn_5_layers(i[0], i[1],  activation = 'relu')
+    model_path = cnn_fns.cnn_5_layers_sgd(i[0], i[1],  activation = 'relu')
     model_paths.append(model_path)
 
+# Train RMSProp Algos:
+model_paths1 = []
+
+# CNN is defined in cnn_function.py
+for i in combos:
+    model_path1 = cnn_fns.cnn_5_layers_rmsprop(i[0], i[1],  activation = 'relu')
+    model_paths1.append(model_path1)
 
 
 

@@ -56,7 +56,7 @@ cnn5_mse_3 = tf.keras.models.load_model(r'saved_models\cnn_5layer_mean_squared_e
 cnn5_msle_1 = tf.keras.models.load_model(r'saved_models\cnn_5layer_mean_squared_logarithmic_error0.1')
 
 # - SGD = 0.01
-cnn5_msle_2 = tf.keras.models.load_model(r'saved_models\cnn_5layer_squared_logarithmic_error0.01')
+cnn5_msle_2 = tf.keras.models.load_model(r'saved_models\cnn_5layer_mean_squared_logarithmic_error0.01')
 
 # - SGD = 0.001
 cnn5_msle_3 = tf.keras.models.load_model(r'saved_models\cnn_5layer_mean_squared_logarithmic_error0.001')
@@ -103,6 +103,3 @@ for i in models:
     accuracy_results.append([i[1], eval_result[1]])
     all_predictions.append([i[1], predicted_classes])
 
-############################################################
-# Export Model to working Directory:
-############################################################
