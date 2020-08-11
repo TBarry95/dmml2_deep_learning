@@ -78,6 +78,18 @@ virus_list = [i for i in all_penu_img_list if viral_pattern.search(i) ]
 print("Number of PNEUMONIA/VIRUS images: ", len(set(virus_list)))
 
 #######################################
+# Ensure len(normal) = len(viral)
+#######################################
+
+if len(virus_list) > len(all_normal_img_list):
+    virus_list = virus_list[0:len(all_normal_img_list)]
+elif len(all_normal_img_list) > len(virus_list):
+    all_normal_img_list = all_normal_img_list[0:len(virus_list)]
+else:
+    virus_list = virus_list
+    all_normal_img_list = all_normal_img_list
+
+#######################################
 # Export new folder: Cleaned data:
 # Test, Train, Validate: Each with Normal and Viral datasets loaded.
 #######################################
@@ -86,8 +98,8 @@ print("Number of PNEUMONIA/VIRUS images: ", len(set(virus_list)))
 test_train_normal = all_normal_img_list[0:int((len(all_normal_img_list)*0.9))]
 test_train_viral = virus_list[0:int((len(virus_list)*0.9))]
 
-normal_train, normal_test= train_test_split(test_train_normal, test_size=0.2, random_state=0)
-viral_train, viral_test= train_test_split(test_train_viral, test_size=0.2, random_state=0)
+normal_train, normal_test = train_test_split(test_train_normal, test_size=0.2, random_state=0)
+viral_train, viral_test = train_test_split(test_train_viral, test_size=0.2, random_state=0)
 
 for i in normal_train:
     shutil.copy(i, r'.\cleaned_data\train\normal')

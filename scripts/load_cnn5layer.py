@@ -28,43 +28,65 @@ except:
 working_dir = set_wd.set_correct_working_dir()
 
 ############################################################
-# Get trained models:
+# Get trained models: 5 layers CNNs
 ############################################################
 
+#################################
+# Optimised using SGD:
+#################################
+
 # loss function: 'binary_crossentropy'
-# - SGD = 0.1
+# - SGD = 0.1, 0.01, 0.001
 cnn5_bc_1 = tf.keras.models.load_model(r'saved_models\cnn_5layer_binary_crossentropy0.1')
-
-# - SGD = 0.01
 cnn5_bc_2 = tf.keras.models.load_model(r'saved_models\cnn_5layer_binary_crossentropy0.01')
-
-# - SGD = 0.001
 cnn5_bc_3 = tf.keras.models.load_model(r'saved_models\cnn_5layer_binary_crossentropy0.001')
 
 # loss function: 'mean_squared_error'
-# - SGD = 0.1
+# - SGD = 0.1, 0.01, 0.001
 cnn5_mse_1 = tf.keras.models.load_model(r'saved_models\cnn_5layer_mean_squared_error0.1')
-
-# - SGD = 0.01
 cnn5_mse_2 = tf.keras.models.load_model(r'saved_models\cnn_5layer_mean_squared_error0.01')
-
-# - SGD = 0.001
 cnn5_mse_3 = tf.keras.models.load_model(r'saved_models\cnn_5layer_mean_squared_error0.001')
 
 # loss function: 'mean_squared_logarithmic_error'
-# - SGD = 0.1
+# - SGD = 0.1, 0.01, 0.001
 cnn5_msle_1 = tf.keras.models.load_model(r'saved_models\cnn_5layer_mean_squared_logarithmic_error0.1')
-
-# - SGD = 0.01
 cnn5_msle_2 = tf.keras.models.load_model(r'saved_models\cnn_5layer_mean_squared_logarithmic_error0.01')
-
-# - SGD = 0.001
 cnn5_msle_3 = tf.keras.models.load_model(r'saved_models\cnn_5layer_mean_squared_logarithmic_error0.001')
+
+#################################
+# Optimised using RMSprop:
+#################################
+
+# loss function: 'binary_crossentropy'
+# - RMsProp = 0.1, 0.01, 0.001
+cnn5_bc_1_rm = tf.keras.models.load_model(r'saved_models\cnn_5lyr_rmsprpbinary_crossentropy0.1')
+cnn5_bc_2_rm = tf.keras.models.load_model(r'saved_models\cnn_5lyr_rmsprpbinary_crossentropy0.01')
+cnn5_bc_3_rm = tf.keras.models.load_model(r'saved_models\cnn_5lyr_rmsprpbinary_crossentropy0.001')
+
+# loss function: 'mean_squared_error'
+# - RMsProp = 0.1, 0.01, 0.001
+cnn5_mse_1_rm = tf.keras.models.load_model(r'saved_models\cnn_5lyr_rmsprpmean_squared_error0.1')
+cnn5_mse_2_rm = tf.keras.models.load_model(r'saved_models\cnn_5lyr_rmsprpmean_squared_error0.01')
+cnn5_mse_3_rm = tf.keras.models.load_model(r'saved_models\cnn_5lyr_rmsprpmean_squared_error0.001')
+
+# loss function: 'mean_squared_logarithmic_error'
+# - RMsProp = 0.1, 0.01, 0.001
+cnn5_msle_1_rm = tf.keras.models.load_model(r'saved_models\cnn_5lyr_rmsprpmean_squared_logarithmic_error0.1')
+cnn5_msle_2_rm = tf.keras.models.load_model(r'saved_models\cnn_5lyr_rmsprpmean_squared_logarithmic_error0.01')
+cnn5_msle_3_rm = tf.keras.models.load_model(r'saved_models\cnn_5lyr_rmsprpmean_squared_logarithmic_error0.001')
+
+#################################
+# Combine all models
+#################################
 
 models = [[cnn5_bc_1, "cnn_5layer_binary_crossentropy0.1"], [cnn5_bc_2, "cnn_5layer_binary_crossentropy0.01"], [cnn5_bc_3, "cnn_5layer_binary_crossentropy0.001"],
           [cnn5_mse_1, "cnn_5layer_mean_squared_error0.1"], [cnn5_mse_2, "cnn_5layer_mean_squared_error0.01"], [cnn5_mse_3, "cnn_5layer_mean_squared_error0.001"],
           [cnn5_msle_1, "cnn_5layer_mean_squared_logarithmic_error0.1"], [cnn5_msle_2, "cnn_5layer_squared_logarithmic_error0.01"],
-          [cnn5_msle_3, "cnn_5layer_mean_squared_logarithmic_error0.001"]]
+          [cnn5_msle_3, "cnn_5layer_mean_squared_logarithmic_error0.001"],
+          [cnn5_bc_1_rm, "cnn_5lyr_rmsprpbinary_crossentropy0.1"], [cnn5_bc_2_rm, "cnn_5lyr_rmsprpbinary_crossentropy0.01"], [cnn5_bc_3_rm, "cnn_5lyr_rmsprpbinary_crossentropy0.001" ],
+          [cnn5_mse_1_rm, "cnn_5lyr_rmsprpmean_squared_error0.1"], [cnn5_mse_2_rm, "cnn_5lyr_rmsprpmean_squared_error0.01"], [cnn5_mse_3_rm, "cnn_5lyr_rmsprpmean_squared_error0.001"],
+          [cnn5_msle_1_rm, "cnn_5lyr_rmsprpmean_squared_logarithmic_error0.1"], [cnn5_msle_2_rm, "cnn_5lyr_rmsprpmean_squared_logarithmic_error0.01"],
+          [cnn5_msle_3_rm, "cnn_5lyr_rmsprpmean_squared_logarithmic_error0.001"] ]
 
 ############################################################
 # Validate Model: get final results
@@ -94,7 +116,7 @@ for i in models:
 
     # get predictions:
     predictions = i[0].predict(val_generator, verbose=1)
-
+    predictions = [[float(round(i[0], 4))] for i in predictions]
     predictions_array = np.array(predictions)
     print(predictions_array.shape)
     predicted_classes = np.argmax(predictions_array, axis=1)
