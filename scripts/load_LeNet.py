@@ -8,6 +8,7 @@
 
 import os
 import tensorflow as tf
+import pandas as pd
 from keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.optimizers import RMSprop
 import math
@@ -58,38 +59,65 @@ models = [[leNet_bc_1, "LeNet_binary_crossentropy0.1"], [leNet_bc_2, "LeNet_bina
 # Validate Models: get final results
 ############################################################
 
-accuracy_results = []
-all_predictions = []
+def get_validation_results(model_list, batch_size, target_size):
 
-for i in models:
+    accuracy = []
+    predcitions = []
 
-    batch_size = 128
+    for i in model_list:
 
-    # load new unseen dataset
-    validation_datagen = ImageDataGenerator(rescale = 1 / 255)
+        # load new unseen dataset
+        validation_datagen = ImageDataGenerator(rescale=1 / 255)
+        val_generator = validation_datagen.flow_from_directory(
+            r'.\cleaned_data\validate',
+            target_size= target_size,
+            batch_size = batch_size,
+            class_mode='binary'
+        )
 
-    val_generator = validation_datagen.flow_from_directory(
-        r'.\cleaned_data\validate',
-        target_size = (32, 32),
-        batch_size = batch_size,
-        class_mode = 'binary'
-    )
+        # accuracy summary
+        eval_result = i[0].evaluate_generator(val_generator)
+        print('Loss rate for validation: ', eval_result[0])
+        print('Accuracy rate for validation: ', eval_result[1])
 
-    # accuracy summary
-    eval_result = i[0].evaluate_generator(val_generator)
-    print('Loss rate for validation: ', eval_result[0])
-    print('Accuracy rate for validation: ', eval_result[1])
+        # get predictions:
+        predictions = i[0].predict(val_generator, verbose=1)
+        predictions_array = np.array(predictions)
+        print(predictions_array.shape)
+        predicted_classes = np.argmax(predictions_array, axis=1)
 
-    # get predictions:
-    predictions = i[0].predict(val_generator, verbose=1)
+        # save results:
+        accuracy.append([i[1], eval_result[1]])
+        predcitions.append([i[1], predicted_classes])
 
-    predictions_array = np.array(predictions)
-    print(predictions_array.shape)
-    predicted_classes = np.argmax(predictions_array, axis=1)
+    return [accuracy, predcitions]
 
-    # save results:
-    accuracy_results.append([i[1], eval_result[1]])
-    all_predictions.append([i[1], predicted_classes])
+#########################################
+# LeNet:
+#########################################
 
-# print(accuracy_results)
-# print(all_predictions)
+lenet_output = get_validation_results(model_list=models, batch_size=128, target_size=(32,32))
+lenet_accuracy = lenet_output[0]
+lenet_predictions = lenet_output[1]
+
+############################################################
+# Export CSV:
+############################################################
+
+df_results = pd.DataFrame()
+all_results = []
+all_models = []
+
+# Lenet
+for i in lenet_accuracy:
+    all_results.append(i[1])
+    all_models.append(i[0])
+
+df_results['ACCURACY'] = all_results
+df_results['MODEL'] = all_models
+df_results1 = df_results.sort_values('ACCURACY')
+df_results1 = df_results1.reset_index()
+df_results1 = df_results1[['ACCURACY', 'MODEL']]
+
+df_results1.to_csv(r".\leNet_results.csv")
+
