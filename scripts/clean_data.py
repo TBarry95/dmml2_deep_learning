@@ -123,4 +123,12 @@ for i in validate_normal:
 for i in validate_viral:
     shutil.copy(i, r'.\cleaned_data\validate\viral')
 
+print("Summary: ")
+print("Normal test: ", len(normal_test))
+print("Normal train: ", len(normal_train))
+print("Normal validate: ", len(validate_normal))
+print("Viral Pneumonia test: ", len(viral_test))
+print("Viral Pneumonia train: ", len(viral_train))
+print("Viral Pneumonia validate: ", len(validate_viral))
+
 print("Filtered raw dataset to new folder: \cleaned_data ")
