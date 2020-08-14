@@ -63,6 +63,20 @@ lenet_models = [[leNet_bc_1, "LeNet_binary_crossentropy0.1"], [leNet_bc_2, "LeNe
 # GoogleNet:
 #########################################
 
+gooNet_bc_1 = tf.keras.models.load_model(r'saved_models\GoogLeNet_binary_crossentropy0.1')
+gooNet_bc_2 = tf.keras.models.load_model(r'saved_models\GoogLeNet_binary_crossentropy0.01')
+gooNet_bc_3 = tf.keras.models.load_model(r'saved_models\GoogLeNet_binary_crossentropy0.001')
+gooNet_mse_1 = tf.keras.models.load_model(r'saved_models\GoogLeNet_mean_squared_error0.1')
+gooNet_mse_2 = tf.keras.models.load_model(r'saved_models\GoogLeNet_mean_squared_error0.01')
+gooNet_mse_3 = tf.keras.models.load_model(r'saved_models\GoogLeNet_mean_squared_error0.001')
+gooNet_msle_1 = tf.keras.models.load_model(r'saved_models\GoogLeNet_mean_squared_logarithmic_error0.1')
+gooNet_msle_2 = tf.keras.models.load_model(r'saved_models\GoogLeNet_mean_squared_logarithmic_error0.01')
+gooNet_msle_3 = tf.keras.models.load_model(r'saved_models\GoogLeNet_mean_squared_logarithmic_error0.001')
+
+lenet_models = [[gooNet_bc_1, "GoogLeNet_binary_crossentropy0.1"], [gooNet_bc_2, "GoogLeNet_binary_crossentropy0.01"], [gooNet_bc_3, "GoogLeNet_binary_crossentropy0.001"],
+          [gooNet_mse_1, "GoogLeNet_mean_squared_error0.1"], [gooNet_mse_2, "GoogLeNet_mean_squared_error0.01"], [gooNet_mse_3, "GoogLeNet_mean_squared_error0.001"],
+          [gooNet_msle_1, "GoogLeNet_mean_squared_logarithmic_error0.1"], [gooNet_msle_2, "GoogLeNet_mean_squared_logarithmic_error0.01"],
+          [gooNet_msle_3, "GoogLeNet_mean_squared_logarithmic_error0.001"]]
 
 #########################################
 # Others:
