@@ -30,26 +30,21 @@ working_dir = set_wd.set_correct_working_dir()
 
 #################################################################
 # Import all models:
+# - Loss functions: 'binary_crossentropy', 'mean_squared_error', 'mean_squared_logarithmic_error'
+# - Learn rates: 0.1,  0.01,  0.001
 #################################################################
 
 #########################################
-# LeNet:
+# LeNet models:
+# - SGD optimisation
 #########################################
 
-# loss function: 'binary_crossentropy'
-# - SGD = 0.1,  0.01,  0.001
 leNet_bc_1 = tf.keras.models.load_model(r'saved_models\LeNet_binary_crossentropy0.1')
 leNet_bc_2 = tf.keras.models.load_model(r'saved_models\LeNet_binary_crossentropy0.01')
 leNet_bc_3 = tf.keras.models.load_model(r'saved_models\LeNet_binary_crossentropy0.001')
-
-# loss function: 'mean_squared_error'
-# - SGD = 0.1,  0.01,  0.001
 leNet_mse_1 = tf.keras.models.load_model(r'saved_models\LeNet_mean_squared_error0.1')
 leNet_mse_2 = tf.keras.models.load_model(r'saved_models\LeNet_mean_squared_error0.01')
 leNet_mse_3 = tf.keras.models.load_model(r'saved_models\LeNet_mean_squared_error0.001')
-
-# loss function: 'mean_squared_logarithmic_error'
-# - SGD = 0.1,  0.01,  0.001
 leNet_msle_1 = tf.keras.models.load_model(r'saved_models\LeNet_mean_squared_logarithmic_error0.1')
 leNet_msle_2 = tf.keras.models.load_model(r'saved_models\LeNet_mean_squared_logarithmic_error0.01')
 leNet_msle_3 = tf.keras.models.load_model(r'saved_models\LeNet_mean_squared_logarithmic_error0.001')
@@ -76,10 +71,40 @@ lenet_models = [[leNet_bc_1, "LeNet_binary_crossentropy0.1"], [leNet_bc_2, "LeNe
 # 3. Franks CNN
 #########################################
 
+###############################
 # 1. CNN 5 layers: SGD optimised
+###############################
 
+cnn5_bc_1 = tf.keras.models.load_model(r'saved_models\cnn_5layer_binary_crossentropy0.1')
+cnn5_bc_2 = tf.keras.models.load_model(r'saved_models\cnn_5layer_binary_crossentropy0.01')
+cnn5_bc_3 = tf.keras.models.load_model(r'saved_models\cnn_5layer_binary_crossentropy0.001')
+cnn5_mse_1 = tf.keras.models.load_model(r'saved_models\cnn_5layer_mean_squared_error0.1')
+cnn5_mse_2 = tf.keras.models.load_model(r'saved_models\cnn_5layer_mean_squared_error0.01')
+cnn5_mse_3 = tf.keras.models.load_model(r'saved_models\cnn_5layer_mean_squared_error0.001')
+cnn5_msle_1 = tf.keras.models.load_model(r'saved_models\cnn_5layer_mean_squared_logarithmic_error0.1')
+cnn5_msle_2 = tf.keras.models.load_model(r'saved_models\cnn_5layer_mean_squared_logarithmic_error0.01')
+cnn5_msle_3 = tf.keras.models.load_model(r'saved_models\cnn_5layer_mean_squared_logarithmic_error0.001')
 
+#################################
+# 2. CNN 5 layers: RMSPROP optimised
+#################################
 
+cnn5_bc_1_rm = tf.keras.models.load_model(r'saved_models\cnn_5lyr_rmsprpbinary_crossentropy0.1')
+cnn5_bc_2_rm = tf.keras.models.load_model(r'saved_models\cnn_5lyr_rmsprpbinary_crossentropy0.01')
+cnn5_bc_3_rm = tf.keras.models.load_model(r'saved_models\cnn_5lyr_rmsprpbinary_crossentropy0.001')
+cnn5_mse_1_rm = tf.keras.models.load_model(r'saved_models\cnn_5lyr_rmsprpmean_squared_error0.1')
+cnn5_mse_2_rm = tf.keras.models.load_model(r'saved_models\cnn_5lyr_rmsprpmean_squared_error0.01')
+cnn5_mse_3_rm = tf.keras.models.load_model(r'saved_models\cnn_5lyr_rmsprpmean_squared_error0.001')
+cnn5_msle_1_rm = tf.keras.models.load_model(r'saved_models\cnn_5lyr_rmsprpmean_squared_logarithmic_error0.1')
+cnn5_msle_2_rm = tf.keras.models.load_model(r'saved_models\cnn_5lyr_rmsprpmean_squared_logarithmic_error0.01')
+cnn5_msle_3_rm = tf.keras.models.load_model(r'saved_models\cnn_5lyr_rmsprpmean_squared_logarithmic_error0.001')
+
+cnn5_models = [[cnn5_bc_1, "cnn_5layer_binary_crossentropy0.1"], [cnn5_bc_2, "cnn_5layer_binary_crossentropy0.01"], [cnn5_bc_3, "cnn_5layer_binary_crossentropy0.001"],
+          [cnn5_mse_1, "cnn_5layer_mean_squared_error0.1"], [cnn5_mse_2, "cnn_5layer_mean_squared_error0.01"], [cnn5_mse_3, "cnn_5layer_mean_squared_error0.001"],
+          [cnn5_msle_1, "cnn_5layer_mean_squared_logarithmic_error0.1"], [cnn5_msle_2, "cnn_5layer_squared_logarithmic_error0.01"], [cnn5_msle_3, "cnn_5layer_mean_squared_logarithmic_error0.001"], [cnn5_bc_1_rm, "cnn_5lyr_rmsprpbinary_crossentropy0.1"],
+          [cnn5_bc_2_rm, "cnn_5lyr_rmsprpbinary_crossentropy0.01"], [cnn5_bc_3_rm, "cnn_5lyr_rmsprpbinary_crossentropy0.001" ], [cnn5_mse_1_rm, "cnn_5lyr_rmsprpmean_squared_error0.1"], [cnn5_mse_2_rm, "cnn_5lyr_rmsprpmean_squared_error0.01"], [cnn5_mse_3_rm, "cnn_5lyr_rmsprpmean_squared_error0.001"],
+          [cnn5_msle_1_rm, "cnn_5lyr_rmsprpmean_squared_logarithmic_error0.1"], [cnn5_msle_2_rm, "cnn_5lyr_rmsprpmean_squared_logarithmic_error0.01"],
+               [cnn5_msle_3_rm, "cnn_5lyr_rmsprpmean_squared_logarithmic_error0.001"] ]
 
 #################################################################
 # Get results:
@@ -132,9 +157,12 @@ lenet_predictions = lenet_output[1]
 
 
 #########################################
-# :
+# CNN 5 layers: SGD optimised:
 #########################################
 
+cnn5_output_sgd = get_validation_results(model_list=cnn5_models, batch_size=128, target_size=(300,300))
+cnn5_sgd_accuracy = cnn5_output_sgd[0]
+cnn5_sgd_predictions = cnn5_output_sgd[1]
 
 #################################################################
 # Combine all results:
@@ -144,15 +172,18 @@ df_results = pd.DataFrame()
 all_results = []
 all_models = []
 
+# Lenet
 for i in lenet_accuracy:
     all_results.append(i[1])
     all_models.append(i[0])
 
-
+# CNN 5 layers
+for i in cnn5_sgd_accuracy:
+    all_results.append(i[1])
+    all_models.append(i[0])
 
 df_results['ACCURACY'] = all_results
 df_results['MODEL'] = all_models
-
 df_results1 = df_results.sort_values('ACCURACY')
 df_results1 = df_results1.reset_index()
 df_results1 = df_results1[['ACCURACY', 'MODEL']]
