@@ -115,7 +115,7 @@ def cnn_5_layers_sgd(loss, learning_rate, activation = 'relu'):
 
     batch_size = 128
     training_size = 2148
-    testing_size = 588
+    testing_size = 538
     epochs = 5
 
     fn_steps_per_epoch = lambda x: int(math.ceil(1. * x / batch_size))
