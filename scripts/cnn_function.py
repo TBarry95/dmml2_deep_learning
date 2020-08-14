@@ -94,10 +94,10 @@ def cnn_5_layers_sgd(loss, learning_rate, activation = 'relu'):
 
         tf.keras.layers.Flatten(),
 
-        tf.keras.layers.Dense(512, activation = 'relu'),  # 512 neuron hidden layer
+        tf.keras.layers.Dense(512, activation = activation),  # 512 neuron hidden layer
 
         # Only 1 output neuron = 'normal' and 1 'pneumonia'
-        tf.keras.layers.Dense(1, activation='sigmoid') 
+        tf.keras.layers.Dense(1, activation=activation)
     ])
 
     model_summary = cnn_model.summary()
@@ -151,7 +151,7 @@ def cnn_5_layers_sgd(loss, learning_rate, activation = 'relu'):
         validation_steps = test_steps
     )
 
-    model_name_loc = r".\saved_models\cnn_5layer_" + str(loss) + str(learning_rate)
+    model_name_loc = r".\saved_models\cnn_5layer_" + str(loss) + str(learning_rate) + str(activation)
     cnn_model.save(model_name_loc)
 
     return model_name_loc

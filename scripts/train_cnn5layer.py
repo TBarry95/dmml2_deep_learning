@@ -59,8 +59,6 @@ combos = list(product(loss_fns, opts))
 # Train Gradient Descent Algos:
 model_paths = []
 
-test = cnn_fns.cnn_5_layers_rmsprop('binary_crossentropy', 0.001,  activation = 'relu')
-
 # CNN is defined in cnn_function.py
 for i in combos:
     model_path = cnn_fns.cnn_5_layers_sgd(i[0], i[1],  activation = 'relu')
