@@ -119,5 +119,5 @@ df_results1 = df_results.sort_values('ACCURACY')
 df_results1 = df_results1.reset_index()
 df_results1 = df_results1[['ACCURACY', 'MODEL']]
 
-df_results1.to_csv(r".\leNet_results.csv")
+df_results1.to_csv(r".\leNet_results.csv", index=False)
 
