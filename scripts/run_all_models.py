@@ -1,6 +1,6 @@
 #################################################################
 # DES: Extract all saved models and run results.
-#     Plot accuracy metric across all models to find best performers.
+#      Plot accuracy metric across all models to find best performers.
 # BY: Tiernan Barry
 #################################################################
 
@@ -63,13 +63,23 @@ lenet_models = [[leNet_bc_1, "LeNet_binary_crossentropy0.1"], [leNet_bc_2, "LeNe
 # AlexNet:
 #########################################
 
+
 #########################################
 # GoogleNet:
 #########################################
 
+
 #########################################
 # Others:
+# 1. CNN 5 layers: SGD optimised
+# 2. CNN 5 layers RMSPROP optimised
+# 3. Franks CNN
 #########################################
+
+# 1. CNN 5 layers: SGD optimised
+
+
+
 
 #################################################################
 # Get results:
@@ -117,16 +127,42 @@ lenet_accuracy = lenet_output[0]
 lenet_predictions = lenet_output[1]
 
 #########################################
-# LeNet:
+# AlexNet:
 #########################################
 
+
+#########################################
+# :
+#########################################
+
+
+#################################################################
+# Combine all results:
+#################################################################
+
+df_results = pd.DataFrame()
+all_results = []
+all_models = []
+
+for i in lenet_accuracy:
+    all_results.append(i[1])
+    all_models.append(i[0])
+
+
+
+df_results['ACCURACY'] = all_results
+df_results['MODEL'] = all_models
+
+df_results1 = df_results.sort_values('ACCURACY')
+df_results1 = df_results1.reset_index()
+df_results1 = df_results1[['ACCURACY', 'MODEL']]
 
 #################################################################
 # Plot results:
 #################################################################
 
+df_results1.plot(kind='line')
 
-
-
-
-
+#########################################
+# Combine all results:
+#########################################
