@@ -7,7 +7,6 @@ import os
 import scripts.set_working_dir as set_wd
 
 import tensorflow as tf
-from keras.preprocessing.image import ImageDataGenerator
 from keras.models import Sequential
 from tensorflow.keras.optimizers import RMSprop
 from keras.preprocessing import image

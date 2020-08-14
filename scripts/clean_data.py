@@ -6,11 +6,9 @@
 # BY: Tiernan Barry
 #########################################################
 
-import os
 import glob
 import re
 import shutil
-import cv2
 from sklearn.model_selection import train_test_split
 
 try:
