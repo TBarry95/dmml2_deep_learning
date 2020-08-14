@@ -55,7 +55,7 @@ except:
 #########################################################
 
 print("#########################################################")
-print("# Neural Network Modelling:")
+print("# Run Neural Networks Models on Validation data:")
 print("#########################################################")
 
 #########################################
@@ -65,7 +65,7 @@ print("#########################################################")
 # - Gradient Descent Learning Rate: 0.1, 0.001, 0.001
 #########################################
 
-print("# LeNet CNN Validation Results:")
+print("# Running LeNet CNN Validation Results:")
 
 try:
     import load_LeNet
