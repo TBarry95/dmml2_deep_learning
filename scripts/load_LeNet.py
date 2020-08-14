@@ -32,33 +32,21 @@ working_dir = set_wd.set_correct_working_dir()
 ############################################################
 
 # loss function: 'binary_crossentropy'
-# - SGD = 0.1
+# - SGD = 0.1,  0.01,  0.001
 leNet_bc_1 = tf.keras.models.load_model(r'saved_models\LeNet_binary_crossentropy0.1')
-
-# - SGD = 0.01
 leNet_bc_2 = tf.keras.models.load_model(r'saved_models\LeNet_binary_crossentropy0.01')
-
-# - SGD = 0.001
 leNet_bc_3 = tf.keras.models.load_model(r'saved_models\LeNet_binary_crossentropy0.001')
 
 # loss function: 'mean_squared_error'
-# - SGD = 0.1
+# - SGD = 0.1,  0.01,  0.001
 leNet_mse_1 = tf.keras.models.load_model(r'saved_models\LeNet_mean_squared_error0.1')
-
-# - SGD = 0.01
 leNet_mse_2 = tf.keras.models.load_model(r'saved_models\LeNet_mean_squared_error0.01')
-
-# - SGD = 0.001
 leNet_mse_3 = tf.keras.models.load_model(r'saved_models\LeNet_mean_squared_error0.001')
 
 # loss function: 'mean_squared_logarithmic_error'
-# - SGD = 0.1
+# - SGD = 0.1,  0.01,  0.001
 leNet_msle_1 = tf.keras.models.load_model(r'saved_models\LeNet_mean_squared_logarithmic_error0.1')
-
-# - SGD = 0.01
 leNet_msle_2 = tf.keras.models.load_model(r'saved_models\LeNet_mean_squared_logarithmic_error0.01')
-
-# - SGD = 0.001
 leNet_msle_3 = tf.keras.models.load_model(r'saved_models\LeNet_mean_squared_logarithmic_error0.001')
 
 models = [[leNet_bc_1, "LeNet_binary_crossentropy0.1"], [leNet_bc_2, "LeNet_binary_crossentropy0.01"], [leNet_bc_3, "LeNet_binary_crossentropy0.001"],
@@ -66,16 +54,9 @@ models = [[leNet_bc_1, "LeNet_binary_crossentropy0.1"], [leNet_bc_2, "LeNet_bina
           [leNet_msle_1, "LeNet_mean_squared_logarithmic_error0.1"], [leNet_msle_2, "LeNet_mean_squared_logarithmic_error0.01"],
           [leNet_msle_3, "LeNet_mean_squared_logarithmic_error0.001"]]
 
-# Print summaries:
-# for i in models:
-#     print(i[1])
-#     print(i[0].summary())
-
 ############################################################
 # Validate Models: get final results
 ############################################################
-
-#models_test = [models[0]]
 
 accuracy_results = []
 all_predictions = []
