@@ -26,9 +26,13 @@ working_dir = set_wd.set_correct_working_dir()
 
 best_models = pd.read_csv(r"top5_models.csv")
 best2_models = best_models.tail(2)
+print(best2_models)
 
 #########################################################
-# Load models:
+# Train models:
 #########################################################
 
-model_1 =
+model_1 = cnn_fns.cnn_5_layers_rmsprop_2("mean_squared_error", 0.001, activation='relu')
+
+model_2 = cnn_fns.cnn_5_layers_rmsprop_2("mean_squared_logarithmic_error", 0.001, activation='relu')
+

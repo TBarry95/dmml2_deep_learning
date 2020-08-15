@@ -360,7 +360,7 @@ def cnn_5_layers_rmsprop_2(loss, learning_rate, activation = 'relu'):
 
     # get training images
     train_gen = train_datagen.flow_from_directory(
-        r'.\augmented_data\train',
+        r'.\augmented_data_clean\train',
         target_size=(300, 300),
         batch_size=batch_size,
         class_mode='binary'
@@ -368,7 +368,7 @@ def cnn_5_layers_rmsprop_2(loss, learning_rate, activation = 'relu'):
 
     # get testing images
     test_gen = test_datagen.flow_from_directory(
-        r'.\augmented_data\test',
+        r'.\augmented_data_clean\test',
         target_size=(300, 300),
         batch_size=batch_size,
         class_mode='binary'
