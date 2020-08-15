@@ -1,0 +1,3 @@
+ACCURACY,MODEL
+0.7666666507720947,cnn_5lyr_rmsprpmean_squared_error0.001
+0.7866666913032532,cnn_5lyr_rmsprpmean_squared_logarithmic_error0.001
