@@ -274,3 +274,116 @@ def cnn_5_layers_rmsprop(loss, learning_rate, activation = 'relu'):
     cnn_model.save(model_name_loc)
 
     return model_name_loc
+
+######################################
+# Duplicate of above: RMS Prop Optimisation - saves to different folder
+######################################
+
+def cnn_5_layers_rmsprop_2(loss, learning_rate, activation = 'relu'):
+    """
+    :param loss: Choose which methodology for calculating the loss function of the NN.
+                 Exhaustive list is provided below from Keras documentation: https://keras.io/api/losses/
+
+    :param learning_rate:
+
+    :param activation: Choose which activation method used for NN model.
+                      Exhaustive list is provided below from Keras documentation: https://keras.io/api/layers/activations/
+
+    :return: The trained NN model path
+    """
+
+    ##################################
+    # Define model:
+    ##################################
+
+    cnn_model = tf.keras.models.Sequential([
+
+    # copy of previous function
+
+        # 1st layer (verbose)
+        tf.keras.layers.Conv2D(filters = 16,
+                               kernel_size = (3, 3),
+                               activation = activation,
+                               input_shape = (300, 300, 3) # x*x pixels, 3 bytes of colour
+                               ),
+        tf.keras.layers.MaxPooling2D(2, 2), # each layer will result in half the width x half height
+                                            # exports new shape = 150x150
+        # 2nd layer:
+        tf.keras.layers.Conv2D(32,  (3, 3), activation = activation),
+        tf.keras.layers.MaxPooling2D(2, 2), # exports new shape = 75 x 75
+
+        # 3rd layer:
+        tf.keras.layers.Conv2D(64, (3, 3), activation = activation),
+        tf.keras.layers.MaxPooling2D(2, 2) , # exports new shape = 32 x 32
+
+        # 4th layer:
+        tf.keras.layers.Conv2D(64, (3, 3), activation = activation),
+        tf.keras.layers.MaxPooling2D(2, 2),
+
+        # 5th layer:
+        tf.keras.layers.Conv2D(64, (3, 3), activation = activation),
+        tf.keras.layers.MaxPooling2D(2, 2),
+
+        tf.keras.layers.Flatten(),
+
+        tf.keras.layers.Dense(512, activation = 'relu'),  # 512 neuron hidden layer
+
+        # Only 1 output neuron = 'normal' and 1 'pneumonia'
+        tf.keras.layers.Dense(1, activation='sigmoid')
+    ])
+
+    model_summary = cnn_model.summary()
+    print(model_summary)
+
+    opt = RMSprop(lr = learning_rate)
+
+    cnn_model.compile(loss = loss,
+                      optimizer = opt,
+                      metrics = ['accuracy'])
+
+    ############################################################
+    # Train and Test Model:
+    ############################################################
+
+    batch_size = 128
+    training_size = 4920
+    testing_size =  1230
+    epochs = 5
+
+    fn_steps_per_epoch = lambda x: int(math.ceil(1. * x / batch_size))
+    steps_per_epoch = fn_steps_per_epoch(training_size)
+    test_steps = fn_steps_per_epoch(testing_size)
+
+    # Extract dataset from folder:
+    train_datagen = ImageDataGenerator(rescale=1 / 255)
+    test_datagen = ImageDataGenerator(rescale=1 / 255)
+
+    # get training images
+    train_gen = train_datagen.flow_from_directory(
+        r'.\augmented_data\train',
+        target_size=(300, 300),
+        batch_size=batch_size,
+        class_mode='binary'
+    )
+
+    # get testing images
+    test_gen = test_datagen.flow_from_directory(
+        r'.\augmented_data\test',
+        target_size=(300, 300),
+        batch_size=batch_size,
+        class_mode='binary'
+    )
+
+    # train model
+    history = cnn_model.fit(
+        train_gen,
+        steps_per_epoch = steps_per_epoch,
+        epochs = epochs,
+        validation_data = test_gen,
+        validation_steps = test_steps
+    )
+
+    model_name_loc = r".\best_models\cnn_5lyr_rmsprp" + str(loss) + str(learning_rate)
+    cnn_model.save(model_name_loc)
+
+    return model_name_loc

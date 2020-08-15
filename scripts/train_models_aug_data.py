@@ -4,7 +4,13 @@
 #########################################################
 
 import scripts.set_working_dir as set_wd
-
+import pandas as pd
+import scripts.cnn_function as cnn_fns
+import os
+import tensorflow as tf
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
+from tensorflow.keras.optimizers import RMSprop
+import math
 #########################################################
 # Set Working Directory:
 # - Ensure RELATIVE working directory (so it can be replicated by any user)
@@ -18,3 +24,11 @@ working_dir = set_wd.set_correct_working_dir()
 # Get best models:
 #########################################################
 
+best_models = pd.read_csv(r"top5_models.csv")
+best2_models = best_models.tail(2)
+
+#########################################################
+# Load models:
+#########################################################
+
+model_1 =
