@@ -1,0 +1,10 @@
+ACCURACY,MODEL
+0.4466666579246521,GoogLeNet_binary_crossentropy0.001
+0.4466666579246521,GoogLeNet_mean_squared_error0.001
+0.44999998807907104,GoogLeNet_binary_crossentropy0.01
+0.44999998807907104,GoogLeNet_mean_squared_error0.01
+0.4833333194255829,GoogLeNet_binary_crossentropy0.1
+0.49666666984558105,GoogLeNet_mean_squared_error0.1
+0.5400000214576721,GoogLeNet_mean_squared_logarithmic_error0.01
+0.5400000214576721,GoogLeNet_mean_squared_logarithmic_error0.001
+0.550000011920929,GoogLeNet_mean_squared_logarithmic_error0.1

@@ -1,0 +1,10 @@
+ACCURACY,MODEL
+0.5433333516120911,Squeeze_binary_crossentropy0.1
+0.5433333516120911,Squeeze_binary_crossentropy0.01
+0.5433333516120911,Squeeze_binary_crossentropy0.001
+0.5600000023841858,Squeeze_mean_squared_error0.1
+0.5600000023841858,Squeeze_mean_squared_error0.01
+0.5600000023841858,Squeeze_mean_squared_error0.001
+0.5600000023841858,Squeeze_mean_squared_logarithmic_error0.1
+0.5600000023841858,Squeeze_mean_squared_logarithmic_error0.01
+0.5600000023841858,Squeeze_mean_squared_logarithmic_error0.001
