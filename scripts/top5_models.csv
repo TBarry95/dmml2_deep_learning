@@ -1,0 +1,11 @@
+ACCURACY,MODEL
+0.5600000023841858,Squeeze_mean_squared_logarithmic_error0.1
+0.5600000023841858,Squeeze_mean_squared_error0.1
+0.5600000023841858,Squeeze_mean_squared_error0.01
+0.5600000023841858,Squeeze_mean_squared_error0.001
+0.5600000023841858,Squeeze_mean_squared_logarithmic_error0.001
+0.5600000023841858,Squeeze_mean_squared_logarithmic_error0.01
+0.5633333325386047,LeNet_binary_crossentropy0.001
+0.5699999928474426,LeNet_mean_squared_error0.01
+0.7833333611488342,cnn_5lyr_rmsprpmean_squared_error0.001
+0.7866666913032532,cnn_5lyr_rmsprpmean_squared_logarithmic_error0.001

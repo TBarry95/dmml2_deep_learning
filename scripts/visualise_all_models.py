@@ -19,13 +19,17 @@ working_dir = set_wd.set_correct_working_dir()
 
 #########################################################
 # Get data:
+# - Read in all csv exports from each models
 #########################################################
 
 cnn5_results = pd.read_csv(r".\cnn5_results.csv")
 lenet_results = pd.read_csv(r".\leNet_results.csv")
+alexnet_results = pd.read_csv(r".\Alex_Net_Results.csv")
+goognet_results = pd.read_csv(r".\googleNet_results.csv")
+squeeze_results = pd.read_csv(r".\squeezeNet_results.csv")
 
 # combine:
-all_results = pd.concat([cnn5_results, lenet_results])
+all_results = pd.concat([cnn5_results, lenet_results, alexnet_results, goognet_results, squeeze_results])
 all_results = all_results[['ACCURACY', 'MODEL']]
 all_results = all_results.sort_values('ACCURACY')
 all_results1 = all_results.reset_index()
@@ -46,3 +50,12 @@ plot.set_ylabel("CNN Model Accuracy")
 best_model = all_results1[all_results1['ACCURACY'] == max(all_results1['ACCURACY'])]
 best_5_models = all_results1.tail(5)
 print(tabulate(best_5_models, headers=best_5_models.columns))
+
+# get top 5 results:
+all_scores = set(all_results1['ACCURACY'])
+all_scores = list(all_scores)
+top_5 = all_scores[len(all_scores)-5:len(all_scores)]
+
+# export csv of best models:
+top5_models = all_results1[all_results1['ACCURACY'].isin(top_5)]
+top5_models.to_csv(r"./top5_models.csv", index=False)
