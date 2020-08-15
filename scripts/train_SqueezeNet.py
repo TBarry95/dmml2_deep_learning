@@ -21,7 +21,6 @@ from itertools import product
 
 working_dir = set_wd.set_correct_working_dir()
 
-
 ############################################################
 # Build model:
 # Define function for building a 5 layer CNN with

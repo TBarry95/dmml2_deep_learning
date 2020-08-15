@@ -12,6 +12,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.optimizers import RMSprop
 import math
 import numpy as np
+import pandas as pd
 
 try:
     import scripts.set_working_dir as set_wd
@@ -80,40 +81,60 @@ models = [[squeeze_bc_1, "Squeeze_binary_crossentropy0.1"],
 # Validate Models: get final results
 ############################################################
 
-#models_test = [models[0]]
+def get_validation_results(model_list, batch_size, target_size):
 
-accuracy_results = []
-all_predictions = []
+    accuracy = []
+    predcitions = []
 
-for i in models:
+    for i in model_list:
 
-    batch_size = 128
+        # load new unseen dataset
+        validation_datagen = ImageDataGenerator(rescale=1 / 255)
+        val_generator = validation_datagen.flow_from_directory(
+            r'.\cleaned_data\validate',
+            target_size= target_size,
+            batch_size = batch_size,
+            class_mode='binary'
+        )
 
-    # load new unseen dataset
-    validation_datagen = ImageDataGenerator(rescale = 1 / 255)
+        # accuracy summary
+        eval_result = i[0].evaluate_generator(val_generator)
+        print('Loss rate for validation: ', eval_result[0])
+        print('Accuracy rate for validation: ', eval_result[1])
 
-    val_generator = validation_datagen.flow_from_directory(
-        r'.\cleaned_data\validate',
-        target_size = (224, 224),
-        batch_size = batch_size,
-        class_mode = 'binary'
-    )
+        # get predictions:
+        predictions = i[0].predict(val_generator, verbose=1)
+        predictions_array = np.array(predictions)
+        print(predictions_array.shape)
+        predicted_classes = np.argmax(predictions_array, axis=1)
 
-    # accuracy summary
-    eval_result = i[0].evaluate_generator(val_generator)
-    print('Loss rate for validation: ', eval_result[0])
-    print('Accuracy rate for validation: ', eval_result[1])
+        # save results:
+        accuracy.append([i[1], eval_result[1]])
+        predcitions.append([i[1], predicted_classes])
 
-    # get predictions:
-    predictions = i[0].predict(val_generator, verbose=1)
+    return [accuracy, predcitions]
 
-    predictions_array = np.array(predictions)
-    print(predictions_array.shape)
-    predicted_classes = np.argmax(predictions_array, axis=1)
+sq_output = get_validation_results(model_list=models, batch_size=128, target_size=(224,224))
+sq_accuracy = sq_output[0]
+sq_predictions = sq_output[1]
 
-    # save results:
-    accuracy_results.append([i[1], eval_result[1]])
-    all_predictions.append([i[1], predicted_classes])
 
-print(accuracy_results)
-print(all_predictions)
+############################################################
+# Export CSV:
+############################################################
+
+df_results = pd.DataFrame()
+all_results = []
+all_models = []
+
+for i in sq_accuracy:
+    all_results.append(i[1])
+    all_models.append(i[0])
+
+df_results['ACCURACY'] = all_results
+df_results['MODEL'] = all_models
+df_results1 = df_results.sort_values('ACCURACY')
+df_results1 = df_results1.reset_index()
+df_results1 = df_results1[['ACCURACY', 'MODEL']]
+
+df_results1.to_csv(r".\squeezeNet_results.csv", index=False)

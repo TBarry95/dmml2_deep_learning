@@ -9,7 +9,7 @@
 #         - GoogleNet CNN
 #         - Alternative CNNs:
 #           - 5 layers
-#
+#       - Plots initial results of best models
 #      **Exception handling designed to run either from console or from correct working directory.
 #########################################################
 
