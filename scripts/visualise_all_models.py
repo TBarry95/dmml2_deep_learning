@@ -27,9 +27,11 @@ lenet_results = pd.read_csv(r".\leNet_results.csv")
 alexnet_results = pd.read_csv(r".\Alex_Net_Results.csv")
 goognet_results = pd.read_csv(r".\googleNet_results.csv")
 squeeze_results = pd.read_csv(r".\squeezeNet_results.csv")
+vgg_results = pd.read_csv(r".\VGG16_results.csv")
+fkcnn_results = pd.read_csv(r".\fk_CNN_results.csv")
 
 # combine:
-all_results = pd.concat([cnn5_results, lenet_results, alexnet_results, goognet_results, squeeze_results])
+all_results = pd.concat([cnn5_results, lenet_results, alexnet_results, goognet_results, squeeze_results, vgg_results, fkcnn_results])
 all_results = all_results[['ACCURACY', 'MODEL']]
 all_results = all_results.sort_values('ACCURACY')
 all_results1 = all_results.reset_index()
@@ -59,3 +61,4 @@ top_5 = all_scores[len(all_scores)-5:len(all_scores)]
 # export csv of best models:
 top5_models = all_results1[all_results1['ACCURACY'].isin(top_5)]
 top5_models.to_csv(r"./top5_models.csv", index=False)
+print("Total number of models analysed: ", len(all_results1))
