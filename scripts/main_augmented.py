@@ -1,5 +1,5 @@
 #########################################################
-# DES: Run best perfroming CNNs (3/5 of them - 2 were too large to upload to Github).
+# DES: Run best perfroming CNNs (4/6 of them - 2 were too large to upload to Github).
 #      Results still added from CSV file
 # BY: Tiernan Barry
 #########################################################
@@ -29,9 +29,10 @@ working_dir = set_wd.set_correct_working_dir()
 model1 = tf.keras.models.load_model(r'best_models\cnn_5lyr_rmsprpmean_squared_error0.001')
 model2 = tf.keras.models.load_model(r'best_models\cnn_5lyr_rmsprpmean_squared_logarithmic_error0.001')
 model3 = tf.keras.models.load_model(r'best_models\Aug_LeNet_mean_squared_error_0.01')
+model4 = tf.keras.models.load_model(r'best_models\Aug_LeNet_binary_crossentropy_0.001')
 
 model_list1 = [[model1, "cnn_5lyr_rmsprpmean_squared_error0.001"], [model2, "cnn_5lyr_rmsprpmean_squared_logarithmic_error0.001"]]
-model_list2 = [[model3, "Aug_LeNet_mean_squared_error_0.01"]]
+model_list2 = [[model3, "Aug_LeNet_mean_squared_error_0.01"], [model4, "Aug_LeNet_binary_crossentropy_0.001"]]
 
 def get_validation_results(model_list, batch_size, target_size):
 
