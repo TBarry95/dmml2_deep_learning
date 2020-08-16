@@ -70,7 +70,7 @@ while num_generated_files <= num_files_desired:
         # Increase the counter
         num_transformations += 1
     # Define location of new data
-    new_folder = r'.//dmml2_deep_learning//scripts//Augmented_Data//normal'
+    new_folder = r'.//dmml2_deep_learning//scripts//augmented_data//normal'
     new_file_path = '%s/augmented_image_%s.jpg' % (new_folder, num_generated_files)
     # Save new image
     sk.io.imsave(new_file_path, transformed_image)
@@ -127,7 +127,7 @@ while num_generated_files <= num_files_desired:
         # Increase the counter
         num_transformations += 1
     # Define location of new data
-    new_folder = r'.//dmml2_deep_learning//scripts//Augmented_Data//viral'
+    new_folder = r'.//dmml2_deep_learning//scripts//augmented_data//viral'
     new_file_path = '%s/augmented_image_%s.jpg' % (new_folder, num_generated_files)
     # Save new image
     sk.io.imsave(new_file_path, transformed_image)
@@ -158,7 +158,7 @@ images = [os.path.join(folder_path_normal, f) for f in os.listdir(folder_path_no
 
 num_moved_files = 0
 
-new_folder = r'.//dmml2_deep_learning//scripts//Augmented_Data//normal'
+new_folder = r'.//dmml2_deep_learning//scripts//augmented_data//normal'
 
 while num_moved_files <= len(images):
     new_file_path = '%s/original_image_%s.jpg' % (new_folder, num_moved_files)
@@ -175,7 +175,7 @@ images = [os.path.join(folder_path_viral, f) for f in os.listdir(folder_path_vir
 
 num_moved_files = 0
 
-new_folder = r'.//dmml2_deep_learning//scripts//Augmented_Data//viral'
+new_folder = r'.//dmml2_deep_learning//scripts//augmented_data//viral'
 
 while num_moved_files <= len(images):
     new_file_path = '%s/original_image_%s.jpg' % (new_folder, num_moved_files)

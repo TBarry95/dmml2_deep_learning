@@ -108,3 +108,5 @@ all_results = all_results[['ACCURACY', 'MODEL']]
 plot = all_results.plot(kind='bar', title="Retrained models on Augmented Data")
 plot.set_xlabel("CNN Model")
 plot.set_ylabel("Classification Accuracy")
+
+print(tabulate(all_results, headers=all_results.columns))
