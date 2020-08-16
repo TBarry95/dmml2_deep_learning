@@ -4,7 +4,11 @@
 # BY: Tiernan Barry
 #########################################################
 
-import scripts.set_working_dir as set_wd
+try:
+    import scripts.set_working_dir as set_wd
+except:
+    import set_working_dir as set_wd
+
 import pandas as pd
 from tabulate import tabulate
 import tensorflow as tf
@@ -19,6 +23,10 @@ import numpy as np
 # - Working directory should be '.\scripts' for windows or './scripts' for UNIX
 #########################################################
 
+print("#########################################################")
+print("# Ensuring correct working directory:")
+print("#########################################################")
+
 working_dir = set_wd.set_correct_working_dir()
 
 #########################################################
@@ -26,10 +34,26 @@ working_dir = set_wd.set_correct_working_dir()
 # - Can only run 3/5 of the best models, 2 models not uploaded to git as too much memory.
 #########################################################
 
+print("#########################################################")
+print("# Get best models and print model summaries (4/6 models available - 2 are too large to upload):")
+print("#########################################################")
+
+print("# Model 1: Alt_CNN_1 ")
 model1 = tf.keras.models.load_model(r'best_models\cnn_5lyr_rmsprpmean_squared_error0.001')
+print(model1.summary())
+
+print("# Model 2: Alt_CNN_2")
 model2 = tf.keras.models.load_model(r'best_models\cnn_5lyr_rmsprpmean_squared_logarithmic_error0.001')
+print(model2.summary())
+
+print("# Model 3: LeNet_mean_squared_error_0.01")
 model3 = tf.keras.models.load_model(r'best_models\Aug_LeNet_mean_squared_error_0.01')
+print(model3.summary())
+
+print("# Model 4: LeNet_binary_crossentropy_0.001")
 model4 = tf.keras.models.load_model(r'best_models\Aug_LeNet_binary_crossentropy_0.001')
+print(model4.summary())
+
 
 model_list1 = [[model1, "cnn_5lyr_rmsprpmean_squared_error0.001"], [model2, "cnn_5lyr_rmsprpmean_squared_logarithmic_error0.001"]]
 model_list2 = [[model3, "Aug_LeNet_mean_squared_error_0.01"], [model4, "Aug_LeNet_binary_crossentropy_0.001"]]
@@ -79,6 +103,10 @@ remaining_models = pd.read_csv(r".\augmented_CNN_results.csv")
 ############################################################
 # Graph data
 ############################################################
+
+print("#########################################################")
+print("# Plot data and print best results")
+print("#########################################################")
 
 df_results = pd.DataFrame()
 all_results = []

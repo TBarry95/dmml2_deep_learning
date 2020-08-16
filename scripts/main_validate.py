@@ -62,8 +62,8 @@ except:
 
 print("#########################################################")
 print("# Run Neural Networks Models on Validation data:")
-print("# - This will take wuite a long tiem to run validation on all models")
-print("# - For end results, run 'visualise_results' script")
+print("# - This will take quite a long tiem to run validation on all models")
+print("# - For end results, run 'main_augmented' script to get best models")
 print("#########################################################")
 
 #########################################
