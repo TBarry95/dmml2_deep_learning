@@ -23,7 +23,7 @@ working_dir = set_wd.set_correct_working_dir()
 #########################################################
 
 cnn5_results = pd.read_csv(r".\cnn5_results.csv")
-lenet_results = pd.read_csv(r".\leNet_results.csv")
+lenet_results = pd.read_csv(r".\leNet_results.csv") #
 alexnet_results = pd.read_csv(r".\Alex_Net_Results.csv")
 goognet_results = pd.read_csv(r".\googleNet_results.csv")
 squeeze_results = pd.read_csv(r".\squeezeNet_results.csv")

@@ -48,17 +48,22 @@ except:
 
 #########################################################
 # Modelling: Run CNN models and print results
-# - LeNet CNN
-# - AlexNet CNN
+# - LeNet CNN #
+# - SqueezeNet CNN #
+# - AlexNet CNN #
+# - GoogleNet #
 # - VGGNet16
-# - GoogleNet
-# for each algorithim, 9 models are ran by combining the following 3x3 paramters:
+# - Alternaitve CNN 1:
+
+# For each algorithim, 9 models are ran by combining the following 3x3 paramters:
 # - Loss functions: 'binary_crossentropy', 'mean_squared_error', 'mean_squared_logarithmic_error'
 # - Gradient Descent Learning Rate: 0.1, 0.001, 0.001
 #########################################################
 
 print("#########################################################")
 print("# Run Neural Networks Models on Validation data:")
+print("# - This will take wuite a long tiem to run validation on all models")
+print("# - For end results, run 'visualise_results' script")
 print("#########################################################")
 
 #########################################
@@ -93,18 +98,41 @@ except:
 
 #########################################
 # AlexNet CNN:
-#
 #########################################
 
-
+print("# Running AlexNet CNN Validation Results:")
+try:
+    import Load_AlexNet
+except:
+    import scripts.Load_AlexNet
 
 #########################################
-# CNN 5 layer:
+# VGGNet16 CNN:
 #########################################
 
-print("# Running CNN 5 layer Validation Results:")
+print("# Running VGGNet16 CNN Validation Results:")
+try:
+    import load_VGG16
+except:
+    import scripts.load_VGG16
+
+#########################################
+# Alternative CNN 1: CNN 5 layer:
+#########################################
+
+print("# Running alterntative CNN 1: CNN 5 layer Validation Results:")
 try:
     import load_cnn5layer
 except:
     import scripts.load_cnn5layer
+
+#########################################
+# Alternative CNN 2: CNN:
+#########################################
+
+print("# Running alterntative CNN 2: CNN Validation Results:")
+try:
+    import load_fk_cnn
+except:
+    import scripts.load_fk_cnn
 
