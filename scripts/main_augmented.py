@@ -1,19 +1,16 @@
-############################################################
-# DES: Load in best models and get validaiton results
-############################################################
+#########################################################
+# DES: Run best perfroming CNNs (3/5 of them - 2 were too large to upload to Github).
+#      Results still added from CSV file
+# BY: Tiernan Barry
+#########################################################
 
-import os
+import scripts.set_working_dir as set_wd
+import pandas as pd
+from tabulate import tabulate
 import tensorflow as tf
 import pandas as pd
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.optimizers import RMSprop
-import math
 import numpy as np
-
-try:
-    import scripts.set_working_dir as set_wd
-except:
-    import set_working_dir as set_wd
 
 #########################################################
 # Set Working Directory:
@@ -24,14 +21,17 @@ except:
 
 working_dir = set_wd.set_correct_working_dir()
 
-############################################################
-# Get trained  models:
-############################################################
+#########################################################
+# Get augmented models:
+# - Can only run 3/5 of the best models, 2 models not uploaded to git as too much memory.
+#########################################################
 
 model1 = tf.keras.models.load_model(r'best_models\cnn_5lyr_rmsprpmean_squared_error0.001')
 model2 = tf.keras.models.load_model(r'best_models\cnn_5lyr_rmsprpmean_squared_logarithmic_error0.001')
+model3 = tf.keras.models.load_model(r'best_models\Aug_LeNet_mean_squared_error_0.01')
 
-models = [[model1, "cnn_5lyr_rmsprpmean_squared_error0.001"], [model2, "cnn_5lyr_rmsprpmean_squared_logarithmic_error0.001"]]
+model_list1 = [[model1, "cnn_5lyr_rmsprpmean_squared_error0.001"], [model2, "cnn_5lyr_rmsprpmean_squared_logarithmic_error0.001"]]
+model_list2 = [[model3, "Aug_LeNet_mean_squared_error_0.01"]]
 
 def get_validation_results(model_list, batch_size, target_size):
 
@@ -66,16 +66,17 @@ def get_validation_results(model_list, batch_size, target_size):
 
     return [accuracy, predcitions]
 
-#########################################
-# Model 1: cnn_5lyr_rmsprpmean_squared_error0.001
-#########################################
-
-output1 = get_validation_results(model_list=models, batch_size=128, target_size=(300,300))
+output1 = get_validation_results(model_list= model_list1, batch_size=128, target_size=(300,300))
+output2 = get_validation_results(model_list= model_list2, batch_size=128, target_size=(32,32))
+output = output1.append(output2)
 accuracy1 = output1[0]
-predictions1 = output1[1]
+accuracy2 = output2[0]
+
+# Get remaining 2 models:
+remaining_models = pd.read_csv(r".\augmented_CNN_results.csv")
 
 ############################################################
-# Export CSV:
+# Graph data
 ############################################################
 
 df_results = pd.DataFrame()
@@ -87,12 +88,22 @@ for i in accuracy1:
     all_results.append(i[1])
     all_models.append(i[0])
 
+for i in accuracy2:
+    all_results.append(i[1])
+    all_models.append(i[0])
+
 df_results['ACCURACY'] = all_results
 df_results['MODEL'] = all_models
 df_results1 = df_results.sort_values('ACCURACY')
 df_results1 = df_results1.reset_index()
 df_results1 = df_results1[['ACCURACY', 'MODEL']]
 
-df_results1.to_csv(r".\augmented_results.csv", index=False)
+# bind:
+all_results = pd.concat([df_results1, remaining_models])
+all_results = all_results.sort_values('ACCURACY')
+all_results = all_results.reset_index()
+all_results = all_results[['ACCURACY', 'MODEL']]
 
-
+plot = all_results.plot(kind='bar', title="Retrained models on Augmented Data")
+plot.set_xlabel("CNN Model")
+plot.set_ylabel("Classification Accuracy")
